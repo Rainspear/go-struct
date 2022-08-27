@@ -25,15 +25,31 @@ func main() {
 			email:   "jimhim@gmail.com",
 			zipCode: 40040,
 		}}
-	jim.print()
+	/*
+		jimPointer := &jim
+		jimPointer.updateName("John")
+		two line above are the same as jim.updateName("John") and can be used correctly
+		because go automatically convert Person into *Person type
+		struct, string, int, float, boolean are value type (primitive types)
+	*/
+	jim.print() // Jim
 	jim.updateName("John")
-	jim.print()
+	jim.print() // John
+
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	updateNumber(numbers)
+	fmt.Println(numbers) // [20 2 3 4 5 6 7 8 9 10] because slices, channels, maps, pointers, functions are reference type
 }
 
-func (p person) print() {
-	fmt.Printf("%+v\n", p)
+func updateNumber(nums []int) {
+	nums[0] = 20
 }
 
-func (p person) updateName(name string) {
-	p.firstName = name
+func (p *person) print() {
+	fmt.Printf("%+v %p \n", *p, &p)
+}
+
+func (pointPerson *person) updateName(name string) {
+	(*pointPerson).firstName = name
+	(*pointPerson).print()
 }
