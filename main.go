@@ -39,6 +39,18 @@ func main() {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	updateNumber(numbers)
 	fmt.Println(numbers) // [20 2 3 4 5 6 7 8 9 10] because slices, channels, maps, pointers, functions are reference type
+
+	name := "bill"
+	namePointer := &name
+	fmt.Println("name: ", &name)              // 0xc00005c250
+	fmt.Println("namePointer: ", namePointer) // 0xc00005c250
+	fmt.Println("&namePointer", &namePointer) // 0xc00000a048
+	printPointer(namePointer)
+	/*
+		printPointer namePointer 0xc00005c250
+		printPointer *namePointer bill
+		printPointer &namePointer 0xc00000a050
+	*/
 }
 
 func updateNumber(nums []int) {
@@ -52,4 +64,10 @@ func (p *person) print() {
 func (pointPerson *person) updateName(name string) {
 	(*pointPerson).firstName = name
 	(*pointPerson).print()
+}
+
+func printPointer(namePointer *string) {
+	fmt.Println("printPointer namePointer", namePointer)
+	fmt.Println("printPointer *namePointer", *namePointer)
+	fmt.Println("printPointer &namePointer", &namePointer)
 }
