@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+type learnInterface struct{}
+
 type bot interface {
 	getGreeting() string
 }
@@ -22,7 +24,9 @@ func printGretting(b bot) {
 	fmt.Println(b.getGreeting())
 }
 
-func main() {
+func (learnInterface) executeMain() {
+	fmt.Println()
+	fmt.Println("Interface MODULE")
 	eb := englishBot{}
 	sb := spanishBot{}
 	printGretting(eb)
