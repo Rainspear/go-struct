@@ -25,21 +25,21 @@ func (lc learnConcurrency) executeMain() {
 	for _, v := range links {
 		go checkLink(v, c)
 	}
-	for i := 0; i < len(links); i++ {
+	for l := range c {
 		current := time.Now().UnixMilli()
-		fmt.Println(<-c)
+		fmt.Println(l)
 		fmt.Println("request time", time.Now().UnixMilli()-current)
+		go checkLink(l, c)
 	}
-
 }
 
 func checkLink(link string, c chan string) {
 	_, error := http.Get(link)
 	if error != nil {
 		fmt.Println(link, " is down")
-		c <- "Might be down"
+		c <- link
 		return
 	}
 	fmt.Println(link, " is up")
-	c <- "Might be up"
+	c <- link
 }
