@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+type logWriter struct{}
+
 type learnHttp struct{}
 
 func (learnHttp) executeMain() {
@@ -18,8 +20,16 @@ func (learnHttp) executeMain() {
 		fmt.Println("Error", err)
 		os.Exit(1)
 	}
-	bs := make([]byte, 99999)
-	res.Body.Read(bs)
+	// bs := make([]byte, 99999)
+	// res.Body.Read(bs)
+	// fmt.Println(string(bs))
+	lw := logWriter{}
+	io.Copy(lw, res.Body)
+	// io.Copy(os.Stdout, res.Body)
+}
+
+func (l logWriter) Write(bs []byte) (int, error) {
 	fmt.Println(string(bs))
-	io.Copy(os.Stdout, res.Body)
+	fmt.Println("Just wrote this many bytes", len(bs))
+	return len(bs), nil
 }
