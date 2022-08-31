@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"time"
 )
 
 type learnConcurrency struct{}
@@ -33,11 +32,30 @@ func (lc learnConcurrency) executeMain() {
 		// 	time.Sleep(5 * time.Second)
 		// 	checkLink(l, c) // warning because not update new value of "channel" and still use old value from channel variable
 		// }()
-		go func(link string) {
-			time.Sleep(5 * time.Second)
-			checkLink(link, c)
-		}(l)
+		// go func(link string) {
+		// 	time.Sleep(5 * time.Second)
+		// 	checkLink(link, c)
+		// }(l)
+		fmt.Println(l)
 	}
+	// for {
+	// 	fmt.Println(<-c)
+	// }
+
+	// This will cause error: because all goroutines are asleep - deadlock! => no consumption value in channel
+	// c1:= make(chan int)
+	// fmt.Println(<-c1)
+
+	// This will run normally maybe channel now is a buffer
+	// c1:= make(chan int, 1)
+	// fmt.Println(<-c1)
+
+	// This will run normally because it will separate in another thread so main thread not error
+	// c1:= make(chan int)
+	// go func() {
+	// c <- 3
+	// }()
+	// fmt.Println(<-c1)
 }
 
 func checkLink(link string, c chan string) {
