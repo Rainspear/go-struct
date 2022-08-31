@@ -29,6 +29,10 @@ func (lc learnConcurrency) executeMain() {
 	for l := range c {
 		// remember to add argument because anonymous function will create a new memory for variable
 		// and not update to new value of channel so that
+		// go func() {
+		// 	time.Sleep(5 * time.Second)
+		// 	checkLink(l, c) // warning because not update new value of "channel" and still use old value from channel variable
+		// }()
 		go func(link string) {
 			time.Sleep(5 * time.Second)
 			checkLink(link, c)
