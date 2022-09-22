@@ -26,6 +26,7 @@ func main() {
 	// lc := learnConcurrency{}
 	// lg := learnGroup{}
 	// lr := learnRace{}
+	rtc := learnRangeChannel{}
 	// lh.executeMain()
 	// li.executeMain()
 	// ls.executeMain()
@@ -33,18 +34,5 @@ func main() {
 	// lc.executeMain()
 	// lg.executeMain()
 	// lr.executeMain()
-
-	var wg sync.WaitGroup
-
-	for i := 0; i < 1000; i++ {
-		wg.Add(1)
-		go count(&wg)
-	}
-
-	for i := 0; i < 1000; i++ {
-		wg.Add(1)
-		go count(&wg)
-	}
-	wg.Wait()
-	fmt.Println("Counter:", counter)
+	rtc.executeMain()
 }
