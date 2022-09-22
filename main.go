@@ -3,15 +3,17 @@ package main
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 )
 
-var counter int = 0
+var counter int64 = 0
 
 var mu sync.Mutex
 
 func count(wg *sync.WaitGroup) {
 	mu.Lock()
-	counter += 1
+	atomic.AddInt64(&counter, 1)
+	fmt.Println("Counter:", atomic.LoadInt64(&counter))
 	mu.Unlock()
 	wg.Done()
 }
