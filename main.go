@@ -28,7 +28,8 @@ func main() {
 	// lr := learnRace{}
 	// rtc := learnRangeChannel{}
 	// lsc := learnSelect{}
-	lcc := learnQuitChannel{}
+	// lqc := learnQuitChannel{}
+	lfic := learnFanIn{}
 	// lh.executeMain()
 	// li.executeMain()
 	// ls.executeMain()
@@ -37,5 +38,6 @@ func main() {
 	// lg.executeMain()
 	// lr.executeMain()
 	// rtc.executeMain()
-	lcc.executeMain()
+	// lqc.executeMain()
+	lfic.executeMain()
 }
