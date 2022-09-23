@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -10,12 +11,15 @@ type learnSelect struct {
 
 func (learnSelect) executeMain() {
 	timeSend := 10
-
-	loopWhenSend(timeSend)
-	loopwhenReceive(timeSend)
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go loopWhenSend(timeSend, &wg)
+	go loopwhenReceive(timeSend, &wg)
+	wg.Wait()
 }
 
-func loopWhenSend(timeSend int) {
+func loopWhenSend(timeSend int, wg *sync.WaitGroup) {
+
 	x, y := 0, 1
 	c := make(chan int)
 	d := make(chan int)
@@ -23,13 +27,15 @@ func loopWhenSend(timeSend int) {
 		for i := 0; i < timeSend; i++ {
 			select {
 			case c <- x:
-				time.Sleep(time.Second)
+				time.Sleep(time.Millisecond * 200)
 				x++
 			case d <- y:
 				y += x
-				time.Sleep(time.Second)
+				time.Sleep(time.Millisecond * 200)
 			}
 		}
+		close(c)
+		close(d)
 	}()
 
 	// print 10 times
@@ -41,30 +47,36 @@ func loopWhenSend(timeSend int) {
 	fmt.Println("loopWhenSend x:", <-c)
 	fmt.Println("loopWhenSend y:", <-d)
 	fmt.Println("loopWhenSend y:", <-d)
-
-	// for i := 0; i < timeSend/2; i++ {
-	// 	fmt.Println("x:", <-c)
-	// 	fmt.Println("y:", <-d)
-	// }
+	fmt.Println("loopWhenSend y:", <-d)
+	fmt.Println("loopWhenSend x:", <-c)
+	// quit <- 0
+	wg.Done()
 }
 
-func loopwhenReceive(timeSend int) {
+func loopwhenReceive(timeSend int, wg *sync.WaitGroup) {
 	x, y := 0, 1
 	c := make(chan int)
 	d := make(chan int)
-	for i := 0; i < timeSend; i++ {
-		select {
-		case c <- x:
-			time.Sleep(time.Second)
-			x++
-		case d <- y:
-			y += x
-			time.Sleep(time.Second)
+
+	go func() {
+		for i := 0; i < timeSend; i++ {
+			select {
+			case c <- x:
+				time.Sleep(time.Millisecond * 200)
+				x++
+			case d <- y:
+				y += x
+				time.Sleep(time.Millisecond * 200)
+			}
 		}
-	}
+		close(c)
+		close(d)
+	}()
 
 	for i := 0; i < timeSend/2; i++ {
 		fmt.Println("loopwhenReceive x:", <-c)
 		fmt.Println("loopwhenReceive y:", <-d)
 	}
+
+	wg.Done()
 }
