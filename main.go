@@ -26,7 +26,8 @@ func main() {
 	// lc := learnConcurrency{}
 	// lg := learnGroup{}
 	// lr := learnRace{}
-	rtc := learnRangeChannel{}
+	// rtc := learnRangeChannel{}
+	lsc := learnSelect{}
 	// lh.executeMain()
 	// li.executeMain()
 	// ls.executeMain()
@@ -34,5 +35,6 @@ func main() {
 	// lc.executeMain()
 	// lg.executeMain()
 	// lr.executeMain()
-	rtc.executeMain()
+	// rtc.executeMain()
+	lsc.executeMain()
 }
