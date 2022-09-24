@@ -36,7 +36,7 @@ func fanOutIn(c1, c2 chan int) {
 	for v := range c1 {
 		wg.Add(1)
 		go func(v1 int) {
-			c2 <- timeConsumingWork(v1)
+			c2 <- timeConsumingWork(v1) // simulate side effect
 			wg.Done()
 		}(v)
 	}
