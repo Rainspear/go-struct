@@ -8,9 +8,9 @@ import (
 type learnJSON struct{}
 
 type personJSON struct {
-	First string
-	Last  string
-	Age   int
+	First string `json:"first_name"`
+	Last  string `json:"last_name"`
+	Age   int    `json:"age"`
 }
 
 func (learnJSON) executeMain() {
