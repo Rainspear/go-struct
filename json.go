@@ -21,4 +21,14 @@ func (learnJSON) executeMain() {
 		fmt.Println(err)
 	}
 	fmt.Println(string(bs))
+
+	s := `[{"First":"Asley","Last":"Ng","Age":26}, {"First":"Asley","Last":"Ng","Age":26}]`
+	var p1 []personJSON
+	bs1 := []byte(s)
+	json.Unmarshal(bs1, &p1)
+
+	fmt.Println("All data of people", p1)
+	for k, v := range p1 {
+		fmt.Printf("index %d: %+v \r\n", k, v)
+	}
 }
