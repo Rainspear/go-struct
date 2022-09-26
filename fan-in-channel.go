@@ -14,7 +14,7 @@ func (learnFanIn) executeMain() {
 	// for v := range c { // will loop forever because input for i := 0; ; i++ create forever
 	// 	fmt.Println("Value of those channels: ", v)
 	// }
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 20; i++ {
 		fmt.Println(<-c)
 	}
 	fmt.Println("About to exit, leaving ...")
