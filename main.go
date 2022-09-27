@@ -33,6 +33,7 @@ func main() {
 	// lfoc := learnFanOut{}
 	// ljs := learnJSON{}
 	lct := learnContext{}
+	// lwct := learnWebcontext{}
 	// lh.executeMain()
 	// li.executeMain()
 	// ls.executeMain()
@@ -44,5 +45,7 @@ func main() {
 	// lqc.executeMain()
 	// lfic.executeMain()
 	// lfoc.executeMain()
+	// ljs.executeMain()
 	lct.executeMain()
+	// lwct.executeMain()
 }
